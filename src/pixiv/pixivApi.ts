@@ -52,15 +52,15 @@ export async function search({
 
   // Types
   if (type === "illust_manga_ugoira" || type === null) {
-    paths.push("artworks");
-  } else if (type === "manga") {
-    paths.push("manga");
-  } else if (type === "novels") {
-    paths.push("novels");
-  } else {
-    paths.push("illustrations");
-    endpoint.searchParams.append("type", type);
-  }
+  paths.push("artworks");
+} else if (type === "manga") {
+  paths.push("manga");
+} else if (type === "novels" || type === "novel") {
+  paths.push("novels");
+} else {
+  paths.push("illustrations");
+  endpoint.searchParams.append("type", type);
+}
 
   // Word
   paths.push(keyword);
