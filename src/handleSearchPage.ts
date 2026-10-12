@@ -58,8 +58,8 @@ export default function handleSearchPage(pathdata: PageChangeEvent) {
     // search関数でパラメータを除外させるための「意図的なnull」を厳密に扱う。
     let _type: Type = type;
 
-    if (category === "manga" || category === "novels") {
-      _type = category;
+    if (category === "manga" || category === "novels" || category === "novel") {
+        _type = category === "novel" ? "novels" : category;
     }
     if (
       category === "illustrations" &&
@@ -100,15 +100,21 @@ export default function handleSearchPage(pathdata: PageChangeEvent) {
     // 5. データの抽出（冗長なswitchの排除）
     let data: illust[];
     if (
-      category === "manga" ||
-      (category !== "artworks" && _type === "manga")
-    ) {
-      data = response.body.manga.data;
-    } else if (category === "artworks" || _type === null) {
-      data = response.body.illustManga.data;
-    } else {
-      data = response.body.illust.data;
-    }
+  category === "manga" ||
+  (category !== "artworks" && _type === "manga")
+) {
+  data = response.body.manga.data;
+} else if (category === "artworks" || _type === null) {
+  data = response.body.illustManga.data;
+} else if (
+  category === "novel" ||
+  category === "novels" ||
+  _type === "novels"
+) {
+  data = response.body.novel.data;
+} else {
+  data = response.body.illust.data;
+}
 
     // Filtering
     const sortResult = filter.run(data);
