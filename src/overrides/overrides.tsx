@@ -14,10 +14,9 @@ export async function renderOverride(pathdata: PageChangeEvent) {
   /**
    * 小説またはtagsページのトップの場合はreactをレンダリングしません
    */
-  if (
-    !(splitPath[1] === "tags" && splitPath[3] === undefined) &&
-    splitPath[3] !== "novels"
-  ) {
+  const isTagsRoot = splitPath[1] === "tags" && splitPath[3] === undefined;
+  const isNovelPage = splitPath[3] === "novel" || splitPath[3] === "novels";
+  if (!isTagsRoot && !isNovelPage) {
     const contentContainer = await findContentContainer();
 
     if (reactRootElem !== null && reactRootElem.isConnected) {
